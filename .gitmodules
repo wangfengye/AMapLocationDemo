@@ -1,0 +1,3 @@
+[submodule "AMap_Android_API_Location_Demo/android_studio/AMapLocationDemo/diagnose"]
+	path = AMap_Android_API_Location_Demo/android_studio/AMapLocationDemo/diagnose
+	url = git@gitlab.alibaba-inc.com:huiqin.glf/LocDiagnose.git

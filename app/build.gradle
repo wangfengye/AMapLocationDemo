@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    signingConfigs {
+        /**
+         * 设置你的keystore相关
+         * demo中只是一个示例，使用时请根据实际情况进行配置
+         */
+//        debug {
+//            //keystore中key的别名
+//            keyAlias 'androiddebugkey'
+//            //keystore中key的密码
+//            keyPassword 'android'
+//            //keystore的文件路径，可以是绝对路径也可以是相对路径
+//            storeFile file('../keystore/debug.keystore')
+//            //keystore的密码
+//            storePassword 'android'
+//        }
+    }
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        applicationId "com.amap.location.demo"
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 2
+        versionName "2.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+//使用aar包时需要加上这段
+//repositories {
+//    flatDir { dirs 'libs' }
+//}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':diagnose:locdiagnoselib')
+    implementation files('libs/BaiduLBS_Android.jar')
+
+//    使用aar包时使用此种方式
+//    compile (name:'AMapLocation_4.5.0_20190122', ext:'aar')
+}
