@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.amap.location.demo"
-          android:versionCode="2"
-          android:versionName="2.0">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.amap.location.demo"
+    android:versionCode="2"
+    android:versionName="2.0">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="23"/>
     <!-- Normal Permissions 不需要运行时注册 -->
     <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -53,11 +51,14 @@
     <!--模拟定位-->
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!--widget-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        tools:replace="label,allowBackup,icon">
 
         <!-- 设置key -->
         <meta-data
@@ -191,6 +192,9 @@
             </intent-filter>
         </service>
         <service android:name=".rpc.HookAidlService">
+            <intent-filter>
+                <action android:name="com.maple.aidl"/>
+            </intent-filter>
         </service>
         <!-- 声明service组件 -->
         <service

@@ -84,6 +84,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
             mBaiduClient.registerLocationListener(new BDAbstractLocationListener() {
                 @Override
                 public void onReceiveLocation(BDLocation location) {
+                    Log.i(TAG, "百度_loc: "+Thread.currentThread().getName());
                     Ap ap = mAps.get(1);
                     ap.setLatitude(location.getLatitude());
                     ap.setLongitude(location.getLongitude());
@@ -101,6 +102,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
 
     @Override
     public void onLocationChanged(AMapLocation location) {
+        Log.i(TAG, "高德_loc: "+Thread.currentThread().getName());
         Ap ap = mAps.get(0);
         if (location.getErrorCode() == AMapLocation.LOCATION_SUCCESS) {
 /*            Log.i(TAG, "onLocationChanged:wifi" + scanResult.SSID+"("+scanResult.BSSID+")"

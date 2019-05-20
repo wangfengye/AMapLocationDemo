@@ -22,12 +22,12 @@ android {
 //            storePassword 'android'
 //        }
     }
-    compileSdkVersion 27
+    compileSdkVersion 26
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.amap.location.demo"
-        minSdkVersion 14
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 2
         versionName "2.0"
@@ -48,6 +48,9 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':diagnose:locdiagnoselib')
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation ('com.github.yhaolpz:FloatWindow:1.0.9')
+
+
 
 //    使用aar包时使用此种方式
 //    compile (name:'AMapLocation_4.5.0_20190122', ext:'aar')
