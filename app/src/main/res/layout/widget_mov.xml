@@ -5,19 +5,19 @@
 <Button
     android:layout_width="48dp"
     android:layout_height="48dp"
-    android:text="前"
+    android:text="北"
     android:layout_marginLeft="48dp"
     android:id="@+id/up"/>
     <Button
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:text="左"
+        android:text="西"
         android:layout_marginTop="48dp"
         android:id="@+id/left"/>
     <Button
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:text="后"
+        android:text="南"
         android:layout_marginTop="96dp"
         android:layout_marginLeft="48dp"
         android:id="@+id/after"/>
@@ -25,7 +25,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:id="@+id/right"
-        android:text="右"
+        android:text="东"
         android:layout_marginLeft="96dp"
         android:layout_marginTop="48dp"/>
 </RelativeLayout>

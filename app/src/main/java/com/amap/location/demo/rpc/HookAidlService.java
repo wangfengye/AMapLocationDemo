@@ -91,7 +91,10 @@ public class HookAidlService extends Service implements AMapLocationListener {
                     ap.setAccuracy((int) location.getRadius());
                     ap.setLocationType("百度_" + location.getCoorType());
                     ap.setAddress(location.getAddrStr());
-                    locing--;
+                    ap.setProvince(location.getProvince());
+                    ap.setCityCode(location.getCityCode());
+                    ap.setAdCode(location.getAdCode());
+                    locing=locing-1;
                     Log.i(TAG, "百度 finish: ");
                     if (mBaiduClient != null) mBaiduClient.stop();mBaiduClient=null;
                 }
@@ -104,6 +107,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
     public void onLocationChanged(AMapLocation location) {
         Log.i(TAG, "高德_loc: "+Thread.currentThread().getName());
         Ap ap = mAps.get(0);
+
         if (location.getErrorCode() == AMapLocation.LOCATION_SUCCESS) {
 /*            Log.i(TAG, "onLocationChanged:wifi" + scanResult.SSID+"("+scanResult.BSSID+")"
                     +"\n经纬度" + location.getLatitude() + "," + location.getLongitude()
@@ -115,6 +119,9 @@ public class HookAidlService extends Service implements AMapLocationListener {
             ap.setAccuracy((int) location.getAccuracy());
             ap.setLocationType("高德_" + location.getLocationType());
             ap.setAddress(location.getAddress());
+            ap.setProvince(location.getProvince());
+            ap.setCityCode(location.getCityCode());
+            ap.setAdCode(location.getAdCode());
 
 
         } else {
@@ -122,6 +129,9 @@ public class HookAidlService extends Service implements AMapLocationListener {
             ap.setLatitude(0);
             ap.setLongitude(0);
             ap.setAccuracy(0);
+            ap.setProvince("");
+            ap.setCityCode("");
+            ap.setAdCode("");
             ap.setLocationType("高德_" + location.getErrorCode());
             ap.setAddress(location.getLocationDetail());
             Log.e("TAG", "签到定位失败，错误码：" + location.getErrorCode() + ", " + location.getLocationDetail());

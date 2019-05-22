@@ -18,6 +18,10 @@ public class Ap implements Parcelable {
     private int accuracy;
     private String locationType;
 
+    private String province;
+    private String cityCode;
+    private String adCode;
+
     public Ap() {
     }
 
@@ -85,6 +89,30 @@ public class Ap implements Parcelable {
         this.locationType = locationType;
     }
 
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public String getAdCode() {
+        return adCode;
+    }
+
+    public void setAdCode(String adCode) {
+        this.adCode = adCode;
+    }
+
     protected Ap(Parcel in) {
         this.bssid = in.readString();
         this.ssid = in.readString();
@@ -94,7 +122,9 @@ public class Ap implements Parcelable {
         this.address = in.readString();
         this.accuracy = in.readInt();
         this.locationType = in.readString();
-
+        this.province = in.readString();
+        this.cityCode = in.readString();
+        this.adCode =in.readString();
     }
 
     public static final Creator<Ap> CREATOR = new Creator<Ap>() {
@@ -124,6 +154,9 @@ public class Ap implements Parcelable {
         dest.writeString(this.address);
         dest.writeInt(this.accuracy);
         dest.writeString(this.locationType);
+        dest.writeString(this.province);
+        dest.writeString(this.cityCode);
+        dest.writeString(this.adCode);
     }
 
 }
