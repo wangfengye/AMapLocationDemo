@@ -3,12 +3,33 @@ package com.amap.location.demo.rpc;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 /**
  * @author maple on 2019/5/14 10:12.
  * @version v1.0
  * @see 1040441325@qq.com
  */
 public class Ap implements Parcelable {
+    //todo:一下两个字段未加入本地传输
+    private int id;
+    private int deviceId;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(int deviceId) {
+        this.deviceId = deviceId;
+    }
+
     private String bssid;
     private String ssid;
     private int level;
@@ -114,6 +135,8 @@ public class Ap implements Parcelable {
     }
 
     protected Ap(Parcel in) {
+        this.id = in.readInt();
+        this.deviceId = in.readInt();
         this.bssid = in.readString();
         this.ssid = in.readString();
         this.level = in.readInt();
@@ -125,6 +148,16 @@ public class Ap implements Parcelable {
         this.province = in.readString();
         this.cityCode = in.readString();
         this.adCode =in.readString();
+    }
+
+    @Override
+    public String toString() {
+        return "Ap{" +
+                "deviceId=" + deviceId +
+                ", bssid='" + bssid + '\'' +
+                ", ssid='" + ssid + '\'' +
+                ", level=" + level +
+                '}';
     }
 
     public static final Creator<Ap> CREATOR = new Creator<Ap>() {
@@ -146,6 +179,8 @@ public class Ap implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeInt(this.deviceId);
         dest.writeString(this.bssid);
         dest.writeString(this.ssid);
         dest.writeInt(this.level);
