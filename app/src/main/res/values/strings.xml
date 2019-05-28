@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">高德定位SDK示例</string>
+    <string name="app_name">Wifi_loc1.1</string>
     <string name="title_main">高德定位SDK功能展示</string>
 
 	<string name="title_location">获取定位数据</string>
