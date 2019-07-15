@@ -26,6 +26,7 @@ public class Ap implements Parcelable {
     private String cityCode;
     private String adCode;
     private String debug;
+    private String area;
 
     public Ap() {
     }
@@ -45,6 +46,7 @@ public class Ap implements Parcelable {
         cityCode = in.readString();
         adCode = in.readString();
         debug = in.readString();
+        area = in.readString();
     }
 
     @Override
@@ -63,6 +65,7 @@ public class Ap implements Parcelable {
         dest.writeString(cityCode);
         dest.writeString(adCode);
         dest.writeString(debug);
+        dest.writeString(area);
     }
 
     @Override
@@ -192,5 +195,13 @@ public class Ap implements Parcelable {
 
     public void setDebug(String debug) {
         this.debug = debug;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 }

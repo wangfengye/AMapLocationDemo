@@ -6,12 +6,17 @@ import com.amap.location.demo.virtual.Loc;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import java.util.List;
 
 /**
  * 高德定位SDK功能接口实例 更多SDK请进入官网“http://lbs.amap.com/api/”查看
@@ -97,6 +102,7 @@ public class StartActivity extends ListActivity {
 				this.getApplicationContext(), demos);
 		setListAdapter(adapter);
 //		permChecker = new PermissionsChecker(this);
+		showScanResults();
 	}
 
 	@Override
@@ -104,7 +110,27 @@ public class StartActivity extends ListActivity {
 		super.onBackPressed();
 		System.exit(0);
 	}
+	private void showScanResults() {
+		WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+		manager.setWifiEnabled(true);
+		manager.startScan();
+		List<ScanResult> scanResults = manager.getScanResults();
+		StringBuilder builder = new StringBuilder();
+		for (ScanResult s : scanResults) {
+			builder.setLength(0);
+			builder.append(s.SSID
+					+ ',' + s.BSSID
+					+ ',' + s.level
+					+ ',' + s.capabilities
+					+ ',' + s.frequency
+					+ '.' + s.channelWidth
+					+ ',' + s.centerFreq0
+					+ ',' + s.centerFreq1
+					+ ',' + s.timestamp);
+			Log.i("TAG", "current wifi: " + builder.toString());
+		}
 
+	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		DemoDetails demo = (DemoDetails) getListAdapter().getItem(position);
