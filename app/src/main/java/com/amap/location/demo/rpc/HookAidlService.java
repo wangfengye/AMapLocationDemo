@@ -47,25 +47,25 @@ public class HookAidlService extends Service implements AMapLocationListener {
         public List<Ap> loc() throws RemoteException {
             mAps.clear();
             mAps.add(new Ap());
-            mAps.add(new Ap());     locing = 2;
+            mAps.add(new Ap());
+            locing = 2;
             Log.i(TAG, "loc: " + Thread.currentThread().getName());
             baiduLoc();
-
-                locationClient = new AMapLocationClient(HookAidlService.this);
-                AMapLocationClientOption option = new AMapLocationClientOption();
-                option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-                option.setOnceLocation(true);
-                option.setOnceLocationLatest(true);
-                option.setMockEnable(false);
-                option.setWifiScan(true);
-                option.setGpsFirst(false);
-                option.setHttpTimeOut(2000);
-                locationClient.setLocationOption(option);
-                locationClient.setLocationListener(HookAidlService.this);
+            locationClient = new AMapLocationClient(HookAidlService.this);
+            AMapLocationClientOption option = new AMapLocationClientOption();
+            option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
+            option.setOnceLocation(true);
+            option.setOnceLocationLatest(true);
+            option.setMockEnable(false);
+            option.setWifiScan(true);
+            option.setGpsFirst(false);
+            option.setHttpTimeOut(2000);
+            locationClient.setLocationOption(option);
+            locationClient.setLocationListener(HookAidlService.this);
 
             locationClient.startLocation();
-
-            while (locing>0) {
+            long time =System.currentTimeMillis();
+            while (locing > 0&&System.currentTimeMillis()-time<10*1000) {
                 //waitting
             }
             Log.i(TAG, "loc: allfinished");
@@ -74,38 +74,38 @@ public class HookAidlService extends Service implements AMapLocationListener {
     };
 
     private void baiduLoc() {
-
-            mBaiduClient = new LocationClient(this);
-            LocationClientOption option = new LocationClientOption();
-            option.setIsNeedAddress(true);
-            option.setIsNeedLocationDescribe(true);
-            option.setCoorType("bd0911");
-            option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
-            mBaiduClient.registerLocationListener(new BDAbstractLocationListener() {
-                @Override
-                public void onReceiveLocation(BDLocation location) {
-                    Log.i(TAG, "百度_loc: "+Thread.currentThread().getName());
-                    Ap ap = mAps.get(1);
-                    ap.setLatitude(location.getLatitude());
-                    ap.setLongitude(location.getLongitude());
-                    ap.setAccuracy((int) location.getRadius());
-                    ap.setLocationType("百度_" + location.getCoorType());
-                    ap.setAddress(location.getAddrStr());
-                    ap.setProvince(location.getProvince());
-                    ap.setCityCode(location.getCityCode());
-                    ap.setAdCode(location.getAdCode());
-                    locing=locing-1;
-                    Log.i(TAG, "百度 finish: ");
-                    if (mBaiduClient != null) mBaiduClient.stop();mBaiduClient=null;
-                }
-            });
-            mBaiduClient.setLocOption(option);
+        mBaiduClient = new LocationClient(this);
+        LocationClientOption option = new LocationClientOption();
+        option.setIsNeedAddress(true);
+        option.setIsNeedLocationDescribe(true);
+        option.setCoorType("bd0911");
+        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        mBaiduClient.registerLocationListener(new BDAbstractLocationListener() {
+            @Override
+            public void onReceiveLocation(BDLocation location) {
+                Log.i(TAG, "百度_loc: " + Thread.currentThread().getName());
+                Ap ap = mAps.get(1);
+                ap.setLatitude(location.getLatitude());
+                ap.setLongitude(location.getLongitude());
+                ap.setAccuracy((int) location.getRadius());
+                ap.setLocationType("百度_" + location.getCoorType());
+                ap.setAddress(location.getAddrStr());
+                ap.setProvince(location.getProvince());
+                ap.setCityCode(location.getCityCode());
+                ap.setAdCode(location.getAdCode());
+                locing = locing - 1;
+                Log.i(TAG, "百度 finish: ");
+                if (mBaiduClient != null) mBaiduClient.stop();
+                mBaiduClient = null;
+            }
+        });
+        mBaiduClient.setLocOption(option);
         mBaiduClient.start();
     }
 
     @Override
     public void onLocationChanged(AMapLocation location) {
-        Log.i(TAG, "高德_loc: "+Thread.currentThread().getName());
+        Log.i(TAG, "高德_loc: " + Thread.currentThread().getName());
         Ap ap = mAps.get(0);
 
         if (location.getErrorCode() == AMapLocation.LOCATION_SUCCESS) {
@@ -136,7 +136,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
             ap.setAddress(location.getLocationDetail());
             Log.e("TAG", "签到定位失败，错误码：" + location.getErrorCode() + ", " + location.getLocationDetail());
         }
-        locing --;
+        locing--;
         Log.i(TAG, "高德 finish: ");
         if (null != locationClient) {
             locationClient.stopLocation();
