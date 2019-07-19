@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+def app_version = " 1.2"
 android {
     sourceSets {
         main {
@@ -29,8 +29,9 @@ android {
         applicationId "com.amap.location.demo"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 4
-        versionName "1.2"
+        versionCode 5
+        versionName app_version
+        resValue "string", "app_name", "LocServer" + app_version
     }
     buildTypes {
         release {
