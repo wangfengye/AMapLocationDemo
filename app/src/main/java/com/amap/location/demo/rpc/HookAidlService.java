@@ -80,6 +80,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
         option.setIsNeedLocationDescribe(true);
         option.setCoorType("bd0911");
         option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        option.setScanSpan(0);
         mBaiduClient.registerLocationListener(new BDAbstractLocationListener() {
             @Override
             public void onReceiveLocation(BDLocation location) {
@@ -136,7 +137,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
             ap.setAddress(location.getLocationDetail());
             Log.e("TAG", "签到定位失败，错误码：" + location.getErrorCode() + ", " + location.getLocationDetail());
         }
-        locing--;
+        locing = locing - 1;
         Log.i(TAG, "高德 finish: ");
         if (null != locationClient) {
             locationClient.stopLocation();

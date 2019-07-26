@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-def app_version = " 1.2"
+def app_version = " 1.3Test"
 android {
     sourceSets {
         main {
