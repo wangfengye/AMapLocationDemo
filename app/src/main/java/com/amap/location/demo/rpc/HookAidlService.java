@@ -31,7 +31,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class HookAidlService extends Service implements AMapLocationListener {
 
     public static final String TAG = "LocService";
-    public static volatile int locing = 2;
+    public static volatile boolean locBaiduing = false;
+    public static volatile boolean locGaodeing = false;
     final private List<Ap> mAps = new ArrayList<>();
     private LocationClient mBaiduClient;
 
@@ -48,7 +49,8 @@ public class HookAidlService extends Service implements AMapLocationListener {
             mAps.clear();
             mAps.add(new Ap());
             mAps.add(new Ap());
-            locing = 2;
+            locBaiduing = true;
+            locGaodeing =true;
             Log.i(TAG, "loc: " + Thread.currentThread().getName());
             baiduLoc();
             locationClient = new AMapLocationClient(HookAidlService.this);
@@ -65,7 +67,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
 
             locationClient.startLocation();
             long time =System.currentTimeMillis();
-            while (locing > 0&&System.currentTimeMillis()-time<10*1000) {
+            while ((locBaiduing||locGaodeing)&&System.currentTimeMillis()-time<10*1000) {
                 //waitting
             }
             Log.i(TAG, "loc: allfinished");
@@ -94,7 +96,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
                 ap.setProvince(location.getProvince());
                 ap.setCityCode(location.getCityCode());
                 ap.setAdCode(location.getAdCode());
-                locing = locing - 1;
+                locBaiduing = false;
                 Log.i(TAG, "百度 finish: ");
                 if (mBaiduClient != null) mBaiduClient.stop();
                 mBaiduClient = null;
@@ -137,7 +139,7 @@ public class HookAidlService extends Service implements AMapLocationListener {
             ap.setAddress(location.getLocationDetail());
             Log.e("TAG", "签到定位失败，错误码：" + location.getErrorCode() + ", " + location.getLocationDetail());
         }
-        locing = locing - 1;
+        locGaodeing=false;
         Log.i(TAG, "高德 finish: ");
         if (null != locationClient) {
             locationClient.stopLocation();
